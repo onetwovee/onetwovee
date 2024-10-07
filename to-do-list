@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<string> toDoList = new List<string>();
+        bool isRunning = true;
+
+        while (isRunning)
+        {
+            Console.WriteLine("\n--- To-Do List Menu ---");
+            Console.WriteLine("1. Add a Task");
+            Console.WriteLine("2. View All Tasks");
+            Console.WriteLine("3. Remove a Task");
+            Console.WriteLine("4. Exit");
+
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddTask(toDoList);
+                    break;
+                case "2":
+                    ViewTasks(toDoList);
+                    break;
+                case "3":
+                    RemoveTask(toDoList);
+                    break;
+                case "4":
+                    isRunning = false;
+                    Console.WriteLine("Goodbye!");
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    static void AddTask(List<string> toDoList)
+    {
+        Console.Write("Enter the task description: ");
+        string task = Console.ReadLine();
+        toDoList.Add(task);
+        Console.WriteLine("Task added successfully.");
+    }
+
+    static void ViewTasks(List<string> toDoList)
+    {
+        Console.WriteLine("\n--- To-Do List ---");
+        if (toDoList.Count == 0)
+        {
+            Console.WriteLine("No tasks available.");
+        }
+        else
+        {
+            for (int i = 0; i < toDoList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {toDoList[i]}");
+            }
+        }
+    }
+
+    static void RemoveTask(List<string> toDoList)
+    {
+        ViewTasks(toDoList);
+        if (toDoList.Count == 0)
+        {
+            return;
+        }
+
+        Console.Write("Enter the task number to remove: ");
+        if (int.TryParse(Console.ReadLine(), out int taskNumber) && taskNumber >= 1 && taskNumber <= toDoList.Count)
+        {
+            toDoList.RemoveAt(taskNumber - 1);
+            Console.WriteLine("Task removed successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Invalid task number."); 
+        }
+    }
+}
